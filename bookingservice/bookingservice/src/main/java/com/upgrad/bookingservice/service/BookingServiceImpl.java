@@ -5,11 +5,12 @@ import com.upgrad.bookingservice.DAO.BookingVO;
 import com.upgrad.bookingservice.model.BookingInfoEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Optional;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -19,6 +20,56 @@ public class BookingServiceImpl implements BookingService {
     @Autowired
     private BookingDAO bookingDAO;
 
+    @Override
+    public BookingVO findBookingById(int id) {
+        Optional<BookingInfoEntity> bookingInfoEntity = bookingDAO.findById(id);
+        if(bookingInfoEntity.isPresent()){
+            BookingVO  bookingVO= new BookingVO();
+            bookingVO.setId(bookingInfoEntity.get().getBookingId());
+            SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");
+            bookingVO.setNumOfRooms(bookingInfoEntity.get().getNumOfRooms());
+            bookingVO.setRoomNumbers(bookingInfoEntity.get().getRoomNumbers());
+            bookingVO.setRoomPrice(bookingInfoEntity.get().getRoomPrice());
+            bookingVO.setAadharNumber(bookingInfoEntity.get().getAadharNumber());
+            bookingVO.setFromDate(outputFormat.format(bookingInfoEntity.get().getFromDate()));
+            bookingVO.setToDate(outputFormat.format(bookingInfoEntity.get().getToDate()));
+            bookingVO.setBookedOn(outputFormat.format(bookingInfoEntity.get().getBookedOn()));
+            return bookingVO;
+        }
+        return null;
+    }
+    @Transactional
+    public BookingVO updateTransaction(int transactionId, int bookingId) {
+
+        Optional<BookingInfoEntity> optionalBookingInfoEntity = bookingDAO.findById(bookingId);
+        if(optionalBookingInfoEntity.isPresent()){
+            optionalBookingInfoEntity.get().setTransactionId(transactionId);
+            BookingInfoEntity booking = optionalBookingInfoEntity.get();
+            booking.setTransactionId(transactionId);
+            BookingInfoEntity bookingInfoEntity = bookingDAO.save(booking);
+
+            BookingVO  bookingVO= new BookingVO();
+            bookingVO.setId(bookingInfoEntity.getBookingId());
+            SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");
+            bookingVO.setNumOfRooms(bookingInfoEntity.getNumOfRooms());
+            bookingVO.setRoomNumbers(bookingInfoEntity.getRoomNumbers());
+            bookingVO.setRoomPrice(bookingInfoEntity.getRoomPrice());
+            bookingVO.setAadharNumber(bookingInfoEntity.getAadharNumber());
+            bookingVO.setFromDate(outputFormat.format(bookingInfoEntity.getFromDate()));
+            bookingVO.setToDate(outputFormat.format(bookingInfoEntity.getToDate()));
+            bookingVO.setBookedOn(outputFormat.format(bookingInfoEntity.getBookedOn()));
+            bookingVO.setTransactionId(transactionId);
+
+            return bookingVO;
+        }
+    return null;
+    }
+
+    @Override
+    public boolean isBookingExists(int id) {
+
+        return bookingDAO.existsById(id);
+    }
 
     @Override
     public BookingVO makeBooking(BookingVO bookingVO){

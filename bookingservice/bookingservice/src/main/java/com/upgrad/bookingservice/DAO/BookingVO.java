@@ -1,11 +1,6 @@
 package com.upgrad.bookingservice.DAO;
 
 
-import org.springframework.cglib.core.Local;
-
-import java.time.LocalDate;
-import java.util.Date;
-
 public class BookingVO {
 
     private int id;
@@ -17,6 +12,21 @@ public class BookingVO {
     private int roomPrice;
     private int transactionId;
     private String bookedOn;
+
+    @Override
+    public String toString() {
+        return "BookingVO{" +
+                "id=" + id +
+                ", fromDate='" + fromDate + '\'' +
+                ", toDate='" + toDate + '\'' +
+                ", aadharNumber='" + aadharNumber + '\'' +
+                ", numOfRooms=" + numOfRooms +
+                ", roomNumbers='" + roomNumbers + '\'' +
+                ", roomPrice=" + roomPrice +
+                ", transactionId=" + transactionId +
+                ", bookedOn='" + bookedOn + '\'' +
+                '}';
+    }
 
     public int getId() {
         return id;
@@ -89,4 +99,6 @@ public class BookingVO {
     public void setBookedOn(String bookedOn) {
         this.bookedOn = bookedOn;
     }
+
+
 }

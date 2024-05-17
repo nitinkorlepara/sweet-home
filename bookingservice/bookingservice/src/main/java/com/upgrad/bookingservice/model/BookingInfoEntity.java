@@ -12,22 +12,28 @@ public class BookingInfoEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="bookingId")
     private int bookingId;
 
+    @Column(name="fromDate")
     private Date fromDate;
 
+    @Column(name="toDate")
     private Date toDate;
 
+    @Column(name="aadharNumber")
     private String aadharNumber;
 
+    @Column(name="numOfRooms")
     private int numOfRooms;
 
+    @Column(name="roomNumbers")
     private String roomNumbers;
 
-    @Column(nullable = false)
+    @Column(name="roomPrice",nullable = false)
     private int roomPrice;
 
-    @Column(columnDefinition = "integer default 0")
+    @Column(name="transactionId",columnDefinition = "integer default 0")
     private int transactionId;
 
     @Column(updatable = false)
@@ -45,7 +51,8 @@ public class BookingInfoEntity {
         this.bookedOn = bookedOn;
     }
 
-
+    public BookingInfoEntity() {
+    }
 
     public int getBookingId() {
         return bookingId;
