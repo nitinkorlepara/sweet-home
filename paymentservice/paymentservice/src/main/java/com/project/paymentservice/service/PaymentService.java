@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface PaymentService {
 
-    public PaymentVO makePayment(PaymentVO paymentVO);
+    public int makePayment(PaymentVO paymentVO);
 
     public Optional<TransactionDetailsEntity> findTransactionById(int transactionId);
 }

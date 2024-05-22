@@ -13,16 +13,17 @@ public class PaymentServiceImpl implements  PaymentService{
     private PaymentDAO paymentDAO;
 
     @Override
-    public PaymentVO makePayment(PaymentVO paymentVO) {
+    public int makePayment(PaymentVO paymentVO) {
         try{
             TransactionDetailsEntity transactionDetailsEntity = paymentDAO.save(new TransactionDetailsEntity(paymentVO.getPaymentMode(),
                     paymentVO.getBookingId(), paymentVO.getCardNumber(), paymentVO.getUpiId()));
+            paymentVO.setTransactionId(transactionDetailsEntity.getTransactionId());
         }
         catch(Exception e){
             e.printStackTrace();
         }
 
-        return paymentVO;
+        return paymentVO.getTransactionId();
     }
 
     @Override
