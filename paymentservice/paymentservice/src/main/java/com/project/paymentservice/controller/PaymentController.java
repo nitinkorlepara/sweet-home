@@ -23,7 +23,7 @@ public class PaymentController {
     RestTemplate restTemplate;
 
     @PostMapping(value="/transaction",consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<PaymentVO> makePayment(@RequestBody PaymentVO paymentVO) {
+    public ResponseEntity<Integer> makePayment(@RequestBody PaymentVO paymentVO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(paymentService.makePayment(paymentVO));
     }
 

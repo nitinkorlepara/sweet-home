@@ -1,10 +1,19 @@
 package com.project.paymentservice.DAO;
 
 public class PaymentVO {
+    private int transactionId;
     private String paymentMode;
     private int bookingId;
     private String upiId;
     private String cardNumber;
+
+    public int getTransactionId() {
+        return transactionId;
+    }
+
+    public void setTransactionId(int transactionId) {
+        this.transactionId = transactionId;
+    }
 
     public String getPaymentMode() {
         return paymentMode;
